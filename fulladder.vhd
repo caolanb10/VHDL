@@ -34,11 +34,11 @@ constant gate_delay: Time := 5 ns;
 
 begin
 
-s1 <= (ln1 xor ln2) after gate_delay;
+s1 <= (in1 xor in2) after gate_delay;
 
 s2 <= (c_in and s1) after gate_delay;
 
-s3 <= (ln1 and ln2) after gate_delay;
+s3 <= (in1 and in2) after gate_delay;
 
 sum <= (s1 xor c_in) after gate_delay;
 

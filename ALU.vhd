@@ -33,7 +33,7 @@ entity ALU is
 PORT (A,B : in STD_LOGIC_VECTOR(15 DOWNTO 0);
 		V,C,N,Z : out STD_LOGIC;
 		output : out STD_LOGIC_VECTOR(15 DOWNTO 0);
-		G: in STD_LOGIC_VECTO(3 DOWNTO 0));
+		G: in STD_LOGIC_VECTOR(3 DOWNTO 0));
 		
 end ALU;
 
@@ -45,7 +45,7 @@ component ArithmeticCircuit
 		A, B: in STD_LOGIC_VECTOR(15 downto 0);
 		s1, s0: in STD_LOGIC_VECTOR;
 		G: out STD_LOGIC_VECTOR(15 downto 0);
-		C_output: out STD_LOGIC);
+		C_output, V_output: out STD_LOGIC);
 end component;
 
 component LogicCircuit
@@ -63,13 +63,27 @@ component mux2to1
            G : out  STD_LOGIC_VECTOR(15 downto 0));
 end component;
 
+signal ACout, LCout : STD_LOGIC_VECTOR(15 DOWNTO 0);
+
 begin
-AC:Arithmetic Circuit PORT MAP(A=>A,
+AC:ArithmeticCircuit PORT MAP (A=>A,
 										 B=>B,
 										 C=>G(3),
 										 s1=>G(1),
-										 s0=>G(
-
-
+										 s0=>G(2),
+										 G=>ACout,
+										 C_output=>C,
+										 V_output=>V);
+										 
+LC:LogicCircuit PORT MAP		 (s0=>G(2),
+										  s1=>G(1),
+										  A=>A,
+										  B=>B,
+										  G=>LCout);
+										  
+Mux:mux2to1				PORT MAP	 (s=>G(0),
+										  ln0=>ACout,
+										  ln1=>LCout,
+										  G=>output);
 end Behavioral;
 

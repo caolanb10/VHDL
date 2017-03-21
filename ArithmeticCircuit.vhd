@@ -22,11 +22,11 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 
 entity ArithmeticCircuit is
-PORT (C: in STD_LOGIC_VECTOR;
+PORT (C: in STD_LOGIC;
 		A, B: in STD_LOGIC_VECTOR(15 downto 0);
-		s1, s0: in STD_LOGIC_VECTOR;
+		s1, s0: in STD_LOGIC;
 		G: out STD_LOGIC_VECTOR(15 downto 0);
-		C_output: out STD_LOGIC);
+		C_output,V_output: out STD_LOGIC);
 		
 end ArithmeticCircuit;
 
@@ -37,7 +37,7 @@ architecture Behavioral of ArithmeticCircuit is
 			sum, c_out:out std_ulogic );
 	end component;
 
-signal c01, c02, c03, c04, c05, c06, c07, c08, c09, c10, c11, c12, c13, c14, c15: STD_LOGIC;
+signal c01, c02, c03, c04, c05, c06, c07, c08, c09, c10, c11, c12, c13, c14, c15, c16: STD_LOGIC;
 begin
 FA01:full_adder PORT MAP(in1=>A(0),
 								 in2=>((B(0) and s0) or ((not B(0)) and s1)),
@@ -118,7 +118,9 @@ FA16:full_adder PORT MAP(in1=>A(15),
 								 in2=>((B(15) and s0) or ((not B(15)) and s1)),
 								 c_in=>c15,
 								 sum=>G(15),
-								 c_out=>C_output);
+								 c_out=>c16);
 								 
+V_output<=c16 xor c15;
+C_output<=c16; 
 end Behavioral;
 
