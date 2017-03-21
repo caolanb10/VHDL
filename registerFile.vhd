@@ -21,13 +21,9 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-
-library UNISIM;
-use UNISIM.VComponents.all;
-
 entity registerFile is
     Port ( A_select : in  STD_LOGIC_VECTOR(2 downto 0);
-           B_select : in  STD_LOGIC(2 downto 0);
+           B_select : in  STD_LOGIC_VECTOR(2 downto 0);
            load_enable : in  STD_LOGIC;
            Dest_select : in  STD_LOGIC_VECTOR(2 downto 0);
            D_data : in  STD_LOGIC_VECTOR(15 downto 0);
@@ -70,9 +66,7 @@ architecture Behavioral of registerFile is
 	
 signal loadReg : STD_LOGIC;
 signal r0,r1,r2,r3,r4,r5,r6,r7 : STD_LOGIC;
-signal o0,o1,o2,o3,o4,o5,o6,o7 : STD_LOGIC;
-signal Data, A_data, B_data : STD_LOGIC_VECTOR(15 downto 0);
-signal A_select, B_select, D_select : STD_LOGIC_VECTOR(2 downto 0);
+signal o0,o1,o2,o3,o4,o5,o6,o7 : STD_LOGIC_VECTOR(15 downto 0);
 
 begin
 muxA:mux8to1 PORT MAP(

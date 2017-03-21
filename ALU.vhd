@@ -19,21 +19,14 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
+library UNISIM;
+use UNISIM.VComponents.all;
 
 entity ALU is
 PORT (A,B : in STD_LOGIC_VECTOR(15 DOWNTO 0);
 		V,C,N,Z : out STD_LOGIC;
 		output : out STD_LOGIC_VECTOR(15 DOWNTO 0);
-		G: in STD_LOGIC_VECTOR(3 DOWNTO 0));
+		Gin: in STD_LOGIC_VECTOR(3 DOWNTO 0));
 		
 end ALU;
 
@@ -41,9 +34,9 @@ architecture Behavioral of ALU is
 
 component ArithmeticCircuit 
 		PORT (
-		C: in STD_LOGIC_VECTOR;
+		C: in STD_LOGIC;
 		A, B: in STD_LOGIC_VECTOR(15 downto 0);
-		s1, s0: in STD_LOGIC_VECTOR;
+		s1, s0: in STD_LOGIC;
 		G: out STD_LOGIC_VECTOR(15 downto 0);
 		C_output, V_output: out STD_LOGIC);
 end component;
@@ -63,27 +56,35 @@ component mux2to1
            G : out  STD_LOGIC_VECTOR(15 downto 0));
 end component;
 
-signal ACout, LCout : STD_LOGIC_VECTOR(15 DOWNTO 0);
+signal ACout, LCout, outputs : STD_LOGIC_VECTOR(15 DOWNTO 0);
+signal Nout, Zout : STD_LOGIC;
 
 begin
 AC:ArithmeticCircuit PORT MAP (A=>A,
 										 B=>B,
-										 C=>G(3),
-										 s1=>G(1),
-										 s0=>G(2),
+										 C=>Gin(3),
+										 s1=>Gin(1),
+										 s0=>Gin(2),
 										 G=>ACout,
 										 C_output=>C,
 										 V_output=>V);
 										 
-LC:LogicCircuit PORT MAP		 (s0=>G(2),
-										  s1=>G(1),
+LC:LogicCircuit PORT MAP		 (s0=>Gin(2),
+										  s1=>Gin(1),
 										  A=>A,
 										  B=>B,
 										  G=>LCout);
 										  
-Mux:mux2to1				PORT MAP	 (s=>G(0),
+Mux:mux2to1		PORT MAP	 		  (s=>Gin(0),
 										  ln0=>ACout,
 										  ln1=>LCout,
-										  G=>output);
+										  G=>outputs);
+								  
+Nout<='1' after 5 ns when outputs(15)='1' else '0';
+
+Zout<='1' after 5 ns when outputs = "0000000000000000" else '0';
+
+output<=outputs;
+
 end Behavioral;
 

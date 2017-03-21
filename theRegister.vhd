@@ -33,6 +33,6 @@ end theRegister;
 
 architecture Behavioral of theRegister is
 begin
-Q<=D after 5 ns when load=1 else
-	0 after 5 ns;
+Q<=D after 5 ns when load='1' else
+	"0000000000000000" after 5 ns;
 end Behavioral;

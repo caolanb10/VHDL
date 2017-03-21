@@ -44,14 +44,20 @@ component mux4to1 PORT
            in0, in1, in2, in3 : in  STD_LOGIC_VECTOR(15 DOWNTO 0);
            output : out  STD_LOGIC_VECTOR(15 DOWNTO 0));
 end component;
-
+signal AandB, AorB, AxorB, notA : STD_LOGIC_VECTOR(15 downto 0);
 begin
+
+AandB<=A and B;
+AxorB<= A xor B;
+AorB<= A or B;
+notA<= not A;
+
 mux:mux4to1 PORT MAP(s0=>s0,
 							s1=>s1,
-							in0=>A AND B,
-							in1=>A or B,
-							in2=>A xor B,
-							in3=>NOT a,
+							in0=>AandB,
+							in1=>AorB,
+							in2=>AxorB,
+							in3=>notA,
 							output=>G);
 end Behavioral;
 

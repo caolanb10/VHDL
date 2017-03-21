@@ -40,6 +40,6 @@ output<= in0 after 5 ns when s0 = '0' and s1 = '0' else
 			in1 after 5 ns when s0 = '0' and s1 = '1' else
 			in2 after 5 ns when s0 = '1' and s1 = '0' else
 			in3 after 5 ns when s0 = '1' and s1 = '1' else
-			"0" after 5 ns;
+			"0000000000000000" after 5 ns;
 end Behavioral;
 

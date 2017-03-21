@@ -20,7 +20,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
-use UNISIM.VComponents.all;
 entity mux8to1 is
     Port (
 			  s: in STD_LOGIC_VECTOR(2 downto 0);

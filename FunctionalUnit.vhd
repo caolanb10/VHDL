@@ -41,7 +41,21 @@ end FunctionalUnit;
 
 architecture Behavioral of FunctionalUnit is
 
-	component
+	component ALU PORT ( A,B : in STD_LOGIC_VECTOR(15 DOWNTO 0);
+								V,C,N,Z : out STD_LOGIC;
+								output : out STD_LOGIC_VECTOR(15 DOWNTO 0);
+								G: in STD_LOGIC_VECTOR(3 DOWNTO 0));
+	end component;
+	component Shifter Port ( B : in  STD_LOGIC_VECTOR(15 DOWNTO 0);
+									Ir : in  STD_LOGIC;
+									IL : in  STD_LOGIC;
+									Hsel : in  STD_LOGIC_VECTOR(1 DOWNTO 0);
+									H : out  STD_LOGIC_VECTOR(15 DOWNTO 0));
+	end component;
+	component mux2to1	Port (s : in  STD_LOGIC;
+									ln0 : in  STD_LOGIC_VECTOR(15 downto 0);
+									ln1 : in  STD_LOGIC_VECTOR(15 downto 0);
+									G : out  STD_LOGIC_VECTOR(15 downto 0));
 begin
 
 
